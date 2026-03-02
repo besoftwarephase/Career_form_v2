@@ -7,7 +7,7 @@
 	<!--Google Inter-->
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
 	<!--link css-->
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="style.css">
 	<!-- Country Flag Input CSS -->
   <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.21/css/intlTelInput.css"/>
@@ -49,156 +49,165 @@
 
 </head>
 <body class="loading">
+	<div class="mobile-block">
+	  <div class="mobile-block-content">
+	    <h4>Screen Not Supported</h4>
+	    <p style="color: #ccc;font-size: 13px;padding: 10px 0px;">This application form is only supported on desktop screens.</p>
+	    <p>Please use a larger device.</p>
+	  </div>
+	</div>
 	<!---Page wrapper-->
 	<div class="form_wrapper">
 		<header><h1>Career Application Form</h1></header>
-		<div class="Form_container">
-		    <div class="form-page" id="page1">
-          
-          <div class="form_title">
-            <h2 class="title">Personal Information</h2>
-            <span class="form_status">step <b>1</b> of 3</span>
-          </div>
+			<div class="scroll-wrapper">
+				<div class="Form_container">
+			    <div class="form-page" id="page1">
+	          
+	          <div class="form_title">
+	            <h2 class="title">Personal Information</h2>
+	            <span class="form_status">step <b>1</b> of 3</span>
+	          </div>
 
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				  	 <img src="icons/Full name.svg" class="form_icons" alt="profile">
-				     <label>Full Name</label>
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					  	 <img src="Full name.svg" class="form_icons" alt="profile">
+					     <label>Full Name</label>
+					    </div>
+					    <input type="text" autocomplete="off" id="name"  pattern="[A-Za-z\s]+" title="Only alphabets and spaces allowed" placeholder="Enter your full name" required/>
+					  </div>
+
+		    	  <div class="input-group">
+		    	  	<div class="icons_label_container">
+				  	  <img src="Email Id.svg" class="form_icons" alt="email address" >
+				      <label>Email ID</label>
 				    </div>
-				    <input type="text" autocomplete="off" id="name"  pattern="[A-Za-z\s]+" title="Only alphabets and spaces allowed" placeholder="Enter your full name" required/>
-				  </div>
+					    <input type="email" autocomplete="off" id="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" placeholder="example@domain.com" required/>
+					  </div>
 
-	    	  <div class="input-group">
-	    	  	<div class="icons_label_container">
-			  	  <img src="icons/Email Id.svg" class="form_icons" alt="email address" >
-			      <label>Email ID</label>
-			    </div>
-				    <input type="email" autocomplete="off" id="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" placeholder="example@domain.com" required/>
-				  </div>
+	          <div class="input-group">
+	          	<div class="icons_label_container">
+	          		 <img src="Contact no.svg" class="form_icons" pattern="[0-9]{10}" required alt="Contact">
+	               <label>Contact Number</label>
+	            </div>  	   
+		            <input id="phone" autocomplete="off" type="tel"  name="phone" placeholder="Enter your mobile number" required/>
+	          </div>
 
-          <div class="input-group">
-          	<div class="icons_label_container">
-          		 <img src="icons/Contact no.svg" class="form_icons" pattern="[0-9]{10}" required alt="Contact">
-               <label>Contact Number</label>
-            </div>  	   
-	            <input id="phone" autocomplete="off" type="tel"  name="phone" placeholder="Enter your mobile number" required/>
-          </div>
+					  <!-- Date Picker Field -->
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					  		<img src="calendar.svg" class="form_icons" alt="Dateofbirth">
+					      <label for="dob">Date of Birth</label>
+					    </div>
+					    <input type="date" style="color: #4c4b4b;" class="flatpickr-input" autocomplete="off" id="dob" placeholder="Select your date of birth"  required/>
+					  </div>
 
-				  <!-- Date Picker Field -->
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				  		<img src="icons/calendar.svg" class="form_icons" alt="Dateofbirth">
-				      <label for="dob">Date of Birth</label>
-				    </div>
-				    <input type="date" style="color: #4c4b4b;" class="flatpickr-input" autocomplete="off" id="dob" placeholder="Select your date of birth"  required/>
-				  </div>
-
-				  <!-- Current Location -->
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				  	   <img src="icons/Map.svg" class="form_icons" alt="pin location">
-				       <label>Current Location</label>
-				   </div>
-				    <input type="text" autocomplete="off" id="location" placeholder="Select your location"  required/>
-				  </div>
-				  <!-- Describe yourself-->
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				  	   <img src="icons/Describe.svg" class="form_icons" alt="about yourself" >
-				       <label>Describe yourself</label>
-				   </div>
-				    <textarea id="describe" autocomplete="off" rows="4" cols="50" required placeholder="Describe yourself" ></textarea>
-				  </div>
-				  <div class="btn-area">
-				    <button class="next-btn" id="next1" >Next →</button>
-				  </div>
-        </div>
-        <div class="form-page" id="page2" style="display:none">
-          
-           <div class="navigation_heading">
-            <div class="back_form" id="back_arrow"><img src="Icons/left.svg" class="form_icons" alt="front"></div>
-          	<span class="form_status" style="position: absolute;right: 0;margin-top: -4px;">step <b>2</b> of 3</span>
-          </div>
-            <h2 class="title" style="line-height: 27px;margin-bottom: 15px;">Creative Mind and Mental Strength Assessment</h2>
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				       <p class="P_questions" >1.when your creative idea faces rejection whats your next move ?</p>
-				   </div>
-				    <textarea id="q_1" autocomplete="off" rows="4" cols="50" required  ></textarea>
-				  </div>
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				       <p class="P_questions" >2.Describe the most unconventional idea you ever had and what made it different ?</p>
-				   </div>
-				    <textarea id="q_2" autocomplete="off" rows="4" cols="50"  ></textarea>
-				  </div>
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				       <p class="P_questions" >3.In marketing campaign, what matters most to you, emotion, logic, ot attention ? Why ?</p>
-				   </div>
-				    <textarea id="q_3" autocomplete="off" rows="4" cols="50"  ></textarea>
-				  </div>
-          <div class="input-group">
-				  	<div class="icons_label_container">
-				       <p class="P_questions" >4.you have limited resources and time to launch a brand campaign. how would you still make it unforgettable?</p>
-				   </div>
-				    <textarea id="q_4" autocomplete="off" rows="4" cols="50"  ></textarea>
-				  </div>
-				  <div class="btn-area">
-				    <button class="next-btn" id="next2">Next →</button>
-				  </div>
-        </div>
-        <div class="form-page" id="page3" style="display:none" >
-          
-           <div class="navigation_heading">
-            <div class="back_form" id="front_arrow"><img src="Icons/left.svg" class="form_icons" alt="front"></div>
-          	<span class="form_status" style="position: absolute;right: 0;margin-top: -4px;">step <b>3</b> of 3</span>
-          </div>
-            <h2 class="title" style="line-height: 27px;margin-bottom: 15px;">Open positions And final details</h2>
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				       <p class="P_questions" >1.Preferred role/Area of Interest</p>
-				   </div>
-				   <select id="q_5" autocomplete="off" required>
-			        <option value="Full Stack Developer">Full Stack Developer</option>
-			        <option value="Java Developer" selected>Java Developer</option>
-			        <option value="Angular Developer">Angular Developer</option>
-			        <option value="Manual Tester / Automation Tester">Manual Tester / Automation Tester</option>
-			    </select>
-				  </div>
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				       <p class="P_questions" >2.Expected Salary(per month)</p>
-				   </div>
-				    <textarea id="q_6" autocomplete="off" rows="4" cols="50"></textarea>
-				  </div>
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				       <p class="P_questions" >3.Availability to join date ?</p>
-				   </div>
-				    <input type="date" style="color: #4c4b4b;" id="q_7" name="joining date">
-				  </div>
-          <div class="input-group">
-				  	<div class="icons_label_container">
-				       <p class="P_questions" >4.Upload your resume(PDF)</p>
-				   </div>
-				    <input type ="file" id="q_8" >
-				  </div>
-				  <div class="input-group">
-				  	<div class="icons_label_container">
-				       <p class="P_questions" >5.Additional message(why do you want to join us?)</p>
-				   </div>
-				    <textarea id="q_9" autocomplete="off" rows="4" cols="50"  ></textarea>
-				  </div>				  
-				  <div class="btn-area">
-				    <button class="next-btn" id="submit" style="background-color: royalblue;">Submit</button>
-				  </div>
-        </div>
-      </div>
-     <footer><h6 style="text-align: center; font-size: 11px;color: #836e6e;font-weight: 300;">All Rights Reserved</h6></footer>
-    <div id="loader" class="loader-overlay">
+					  <!-- Current Location -->
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					  	   <img src="Map.svg" class="form_icons" alt="pin location">
+					       <label>Current Location</label>
+					   </div>
+					    <input type="text" autocomplete="off" id="location" placeholder="Select your location"  required/>
+					  </div>
+					  <!-- Describe yourself-->
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					  	   <img src="Describe.svg" class="form_icons" alt="about yourself" >
+					       <label>Describe yourself</label>
+					   </div>
+					    <textarea id="describe" autocomplete="off" rows="4" cols="50" required placeholder="Describe yourself" ></textarea>
+					  </div>
+					  <div class="btn-area">
+					    <button class="next-btn" id="next1" >Next →</button>
+					  </div>
+	        </div>
+	        <div class="form-page" id="page2" style="display:none">
+	          
+	           <div class="navigation_heading">
+	            <div class="back_form" id="back_arrow"><img src="left.svg" class="form_icons" alt="front"></div>
+	          	<span class="form_status" style="position: absolute;right: 0;margin-top: -4px;">step <b>2</b> of 3</span>
+	          </div>
+	            <h2 class="title" style="line-height: 27px;margin-bottom: 15px;">Creative Mind and Mental Strength Assessment</h2>
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					       <p class="P_questions" >1.when your creative idea faces rejection whats your next move ?</p>
+					   </div>
+					    <textarea id="q_1" autocomplete="off" rows="4" cols="50" required  ></textarea>
+					  </div>
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					       <p class="P_questions" >2.Describe the most unconventional idea you ever had and what made it different ?</p>
+					   </div>
+					    <textarea id="q_2" autocomplete="off" rows="4" cols="50"  ></textarea>
+					  </div>
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					       <p class="P_questions" >3.In marketing campaign, what matters most to you, emotion, logic, ot attention ? Why ?</p>
+					   </div>
+					    <textarea id="q_3" autocomplete="off" rows="4" cols="50"  ></textarea>
+					  </div>
+	          <div class="input-group">
+					  	<div class="icons_label_container">
+					       <p class="P_questions" >4.you have limited resources and time to launch a brand campaign. how would you still make it unforgettable?</p>
+					   </div>
+					    <textarea id="q_4" autocomplete="off" rows="4" cols="50"  ></textarea>
+					  </div>
+					  <div class="btn-area">
+					    <button class="next-btn" id="next2">Next →</button>
+					  </div>
+	        </div>
+	        <div class="form-page" id="page3" style="display:none" >
+	          
+	           <div class="navigation_heading">
+	            <div class="back_form" id="front_arrow"><img src="left.svg" class="form_icons" alt="front"></div>
+	          	<span class="form_status" style="position: absolute;right: 0;margin-top: -4px;">step <b>3</b> of 3</span>
+	          </div>
+	            <h2 class="title" style="line-height: 27px;margin-bottom: 15px;">Open positions And final details</h2>
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					       <p class="P_questions" >1.Preferred role/Area of Interest</p>
+					   </div>
+					   <select id="q_5" autocomplete="off" required>
+				        <option value="Full Stack Developer">Full Stack Developer</option>
+				        <option value="Java Developer" selected>Java Developer</option>
+				        <option value="Angular Developer">Angular Developer</option>
+				        <option value="Manual Tester / Automation Tester">Manual Tester / Automation Tester</option>
+				    </select>
+					  </div>
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					       <p class="P_questions" >2.Expected Salary(per month)</p>
+					   </div>
+					    <textarea id="q_6" autocomplete="off" rows="4" cols="50"></textarea>
+					  </div>
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					       <p class="P_questions" >3.Availability to join date ?</p>
+					   </div>
+					    <input type="date" style="color: #4c4b4b;" id="q_7" name="joining date">
+					  </div>
+	          <div class="input-group">
+					  	<div class="icons_label_container">
+					       <p class="P_questions" >4.Upload your resume(PDF)</p>
+					   </div>
+					    <input type ="file" id="q_8" >
+					  </div>
+					  <div class="input-group">
+					  	<div class="icons_label_container">
+					       <p class="P_questions" >5.Additional message(why do you want to join us?)</p>
+					   </div>
+					    <textarea id="q_9" autocomplete="off" rows="4" cols="50"  ></textarea>
+					  </div>				  
+					  <div class="btn-area">
+					    <button class="next-btn" id="submit" style="background-color: royalblue;">Submit</button>
+					  </div>
+	        </div>
+	      </div>
+	     <footer><h6 style="text-align: center; font-size: 11px;color: #836e6e;font-weight: 300;">All Rights Reserved</h6></footer>
+	    </div>
+    	<div id="loader" class="loader-overlay">
       <div class="spinner"></div>
-    <p>Submitting your details…</p>
+    	<p>Submitting your details…</p>
 </div>
 	</div>
 </body>
@@ -210,7 +219,7 @@
   <!--SMTP-->
   <!-- <script src="https://smtpjs.com/v3/smtp.js"></script> -->
  <!--Main -->
-<script type="text/javascript" src="js/bliend.js">
+<script type="text/javascript" src="bliend.js">
 </script>
 
 </html>

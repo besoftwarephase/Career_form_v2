@@ -44,7 +44,6 @@ html,body{
 	color: #000;
 	box-sizing: border-box;
   scroll-behavior: smooth;
-  min-width: 400px;   /* Prevent shrinking below 400px */
   overflow-x: auto;
 }
 input,button,textarea{
@@ -95,14 +94,19 @@ body::-webkit-scrollbar-thumb:hover {
   position: relative;
   background-color: #ffffff;
   padding: 20px 20px;
-  background-image: url('../icons/bg.jpg');
+  background-image: url('bg.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed; /* Keeps image fixed on scroll */
   background-size: cover; /* Scales image to cover entire screen */
   background-position: center; 
 }
+.scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;     /* allow horizontal scroll */
+}
 .Form_container
-{
+{ 
+  
 	margin: 20px;
   padding: 28px;
   position: relative;
@@ -114,12 +118,12 @@ header h1
 {
   text-align: center;
   font-size: 18px;
-  margin: 20px 0px 0px 0px
+  margin: 20px 0px 0px 0px;
   text-transform: uppercase;
 }
 
 .form-page {
-    max-width: 390px;
+    width: 390px;
     margin: auto;
     border: 0.5px solid #4c4b4b12;
     border-radius: 20px;
@@ -290,7 +294,7 @@ input, textarea {
 .loader-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, 0.85);
+ background: linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%);
   display: none; /* hidden by default */
   align-items: center;
   justify-content: center;
@@ -310,15 +314,44 @@ input, textarea {
   margin-bottom: 12px;
 }
 
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
-@media (max-width: 400px) {
-  html, body {
-    min-width: 400px;
-    overflow-x: auto;
+.mobile-block {
+  display: none;
+}
+@media (max-width: 410px) {
+
+  .mobile-block {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 9999;
+    padding: 20px;
+  }
+
+  .mobile-block-content {
+    background: #111;
+    padding: 30px;
+    border-radius: 10px;
+  }
+
+  .mobile-block-content h2 {
+    margin-bottom: 10px;
+  }
+
+  body {
+    overflow: hidden; /* disable scroll */
   }
 }
+
+
 
 
 
