@@ -1,0 +1,18 @@
+Html
+<div class="loader-container">
+  <svg id="step-loader-b" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 40 40" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" overflow="visible">
+<style><![CDATA[
+#step-loader-b-u-s1_to {animation: step-loader-b-u-s1_to__to 1000ms linear infinite normal forwards}@keyframes step-loader-b-u-s1_to__to { 0% {transform: translate(26.82px,10.7px)} 100% {transform: translate(20.000001px,19.999999px)}} #step-loader-b-u-s2_to {animation: step-loader-b-u-s2_to__to 1000ms linear infinite normal forwards}@keyframes step-loader-b-u-s2_to__to { 0% {transform: translate(20.005001px,19.999999px)} 100% {transform: translate(13.185001px,29.299999px)}} #step-loader-b-u-s3_to {animation: step-loader-b-u-s3_to__to 1000ms linear infinite normal forwards}@keyframes step-loader-b-u-s3_to__to { 0% {offset-distance: 0%} 30% {offset-distance: 6.585263%;animation-timing-function: cubic-bezier(0,0.22,0.995,0.465)} 100% {offset-distance: 100%}} #step-loader-b-u-s3_tr {animation: step-loader-b-u-s3_tr__tr 1000ms linear infinite normal forwards}@keyframes step-loader-b-u-s3_tr__tr { 0% {transform: rotate(0deg)} 30% {transform: rotate(0deg);animation-timing-function: cubic-bezier(0,0.72,0.98,0.665)} 100% {transform: rotate(180.000004deg)}}
+]]></style>
+<g id="step-loader-b-u-s1_to" transform="translate(26.82,10.7)"><path id="step-loader-b-u-s1" d="M13.77,13.42v-5.44c0-.58.47-1.05,1.06-1.05h23.98c.58,0,1.06.47,1.06,1.05v5.44c0,.58-.47,1.05-1.06,1.05h-23.98c-.58,0-1.06-.47-1.06-1.05v0Z" transform="translate(-26.82,-10.7)" fill="#00d1bb" fill-rule="evenodd" stroke-width="0"/></g><g id="step-loader-b-u-s2_to" transform="translate(20.005001,19.999999)"><path id="step-loader-b-u-s2" d="M6.96,22.72v-5.44c0-.58.47-1.05,1.06-1.05h23.98c.58,0,1.06.47,1.06,1.05v5.44c0,.58-.47,1.05-1.06,1.05h-23.99c-.58,0-1.06-.47-1.06-1.05v0Z" transform="translate(-20.005001,-19.999999)" fill="#00d1bb" fill-rule="evenodd" stroke-width="0"/></g><g id="step-loader-b-u-s3_to" style="offset-path:path('M13.185,29.3Q13.185,29.3,9.291856,32.032191C-22.575371,33.075006,-11.821489,-3.050328,26.805,10.725793');offset-rotate:0deg"><g id="step-loader-b-u-s3_tr" transform="rotate(0)"><path id="step-loader-b-u-s3" d="M0.14,32.02v-5.44c0-.58.47-1.05,1.06-1.05h23.98c.58,0,1.06.47,1.06,1.05v5.44c0,.58-.47,1.05-1.06,1.05h-23.99c-.58,0-1.06-.47-1.06-1.05h.01Z" transform="translate(-13.185,-29.3)" fill="#00d1bb" fill-rule="evenodd" stroke-width="0"/></g></g></svg>
+</div>
+
+Css
+.loader-container {
+  position:absolute;
+  top:50%;
+  left:50%;
+  height:5rem;
+  width:5rem;
+  translate:-2.5rem -2.5rem;
+}
