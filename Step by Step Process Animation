@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Onboarding</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e8eaf0;
+    --text-muted: #7b80a0;
+    --success: #4ade80;
+    --accent: #6366f1;
+    --radius: 14px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  main { width: 100%; max-width: 480px; padding: 24px; }
+
+  .onboarding { display: flex; flex-direction: column; gap: 16px; }
+
+  /* Transition fade-out/in for step changes */
+  .onboarding__finish-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: opacity 0.3s;
+  }
+  .onboarding__finish-steps--done { opacity: 0.4; pointer-events: none; }
+  .onboarding--resetting .onboarding__finish-steps { transition: none; }
+
+  .onboarding__finish-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    height: 80px;
+  }
+
+  .onboarding__finish-step-phase {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px;
+    position: absolute;
+    inset: 0;
+    transition: opacity 0.4s, transform 0.4s;
+  }
+
+  /* Before phase (progress) */
+  .onboarding__finish-step--waiting .onboarding__finish-step-phase:first-child,
+  .onboarding__finish-step--current .onboarding__finish-step-phase:first-child {
+    opacity: 1; transform: translateY(0);
+  }
+  .onboarding__finish-step--done .onboarding__finish-step-phase:first-child {
+    opacity: 0; transform: translateY(-12px);
+  }
+
+  /* After phase (done) */
+  .onboarding__finish-step--waiting .onboarding__finish-step-phase:last-child,
+  .onboarding__finish-step--current .onboarding__finish-step-phase:last-child {
+    opacity: 0; transform: translateY(12px);
+  }
+  .onboarding__finish-step--done .onboarding__finish-step-phase:last-child {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* Waiting step dims */
+  .onboarding__finish-step--waiting {
+    opacity: 0.45;
+  }
+  .onboarding__finish-step--current,
+  .onboarding__finish-step--done { opacity: 1; }
+
+  .onboarding--resetting .onboarding__finish-step,
+  .onboarding--resetting .onboarding__finish-step-phase {
+    transition: none;
+  }
+
+  .onboarding__finish-step-text h2 { font-size: 15px; font-weight: 600; }
+  .onboarding__finish-step-text p  { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+  /* Progress SVG */
+  .onboarding__progress { display: block; flex-shrink: 0; }
+  .onboarding__progress-track { stroke: var(--border); }
+  .onboarding__progress circle:last-child { color: var(--accent); transition: stroke-dashoffset 0.05s linear; }
+
+  /* Icon */
+  .onboarding__icon { display: block; flex-shrink: 0; }
+  .onboarding__icon--success { color: var(--success); }
+
+  /* Finished panel */
+  .onboarding__finished {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    animation: fadeUp 0.4s ease both;
+  }
+  .onboarding__finished .onboarding__icon { width: 32px; height: 32px; }
+  .onboarding__finished h2 { font-size: 20px; font-weight: 700; }
+  .onboarding__finished p  { font-size: 14px; color: var(--text-muted); max-width: 280px; line-height: 1.5; }
+
+  .onboarding__button {
+    margin-top: 8px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .onboarding__button:hover { opacity: 0.85; transform: translateY(-1px); }
+  .onboarding__button:active { transform: translateY(0); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="onboarding" id="onboarding"></div>
+</main>
+
+<!-- SVG sprites -->
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <symbol id="check-circle" viewBox="0 0 16 16">
+    <circle fill="currentcolor" cx="8" cy="8" r="8"/>
+    <polyline fill="none" stroke="var(--bg)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" points="4 8,7 11,12 5"/>
+  </symbol>
+  <symbol id="checkmark" viewBox="0 0 16 16">
+    <polyline fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" points="2 7,7 11,15 2"/>
+  </symbol>
+</svg>
+
+<script>
+  // ── State ──────────────────────────────────────────────────────────────────
+  const state = {
+    finishStep: -1,
+    finishStepProgress: 1,
+    isResetting: false,
+  };
+
+  const finishSteps = [
+    {
+      before: { title: "Setting up your workspace…",  subtitle: "Bringing your workspace to life"   },
+      after:  { title: "Workspace is ready!",          subtitle: "Dive in and discover what's possible" }
+    },
+    {
+      before: { title: "Adding departments…",          subtitle: "Personalizing your workspace"     },
+      after:  { title: "Departments added!",           subtitle: "All prepped and ready for action" }
+    },
+    {
+      before: { title: "Inviting people…",             subtitle: "Reaching out to your peers"       },
+      after:  { title: "Invites sent!",                subtitle: "Build something great together"   }
+    },
+  ];
+
+  let rafId    = 0;
+  let waiterId = 0;
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function icon(id, colorClass = "") {
+    return `<svg class="onboarding__icon${colorClass ? ` onboarding__icon--${colorClass}` : ""}" width="16" height="16" aria-hidden="true"><use href="#${id}"/></svg>`;
+  }
+
+  function progressSVG(value) {
+    const circ   = 62.83;
+    const dash   = `${circ} ${circ}`;
+    const offset = circ * (1 - value);
+    return `
+      <svg class="onboarding__progress" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <g fill="transparent" stroke-linecap="round" stroke-width="3" transform="rotate(-90,12,12)">
+          <circle class="onboarding__progress-track" cx="12" cy="12" r="10"/>
+          <circle stroke="currentcolor" cx="12" cy="12" r="10"
+            stroke-dasharray="${dash}" stroke-dashoffset="${offset}"/>
+        </g>
+      </svg>`;
+  }
+
+  function stepPhaseHTML(phase, progressActive) {
+    return `
+      <div class="onboarding__finish-step-phase">
+        ${progressSVG(progressActive ? state.finishStepProgress : 0)}
+        <div class="onboarding__finish-step-text">
+          <h2>${phase.title}</h2>
+          <p>${phase.subtitle}</p>
+        </div>
+      </div>`;
+  }
+
+  function stepDonePhaseHTML(phase) {
+    return `
+      <div class="onboarding__finish-step-phase">
+        ${icon("checkmark", "success")}
+        <div class="onboarding__finish-step-text">
+          <h2>${phase.title}</h2>
+          <p>${phase.subtitle}</p>
+        </div>
+      </div>`;
+  }
+
+  function getPhase(index) {
+    const { finishStep, finishStepProgress } = state;
+    if (index < finishStep || (index === finishStep && finishStepProgress >= 1)) return "done";
+    if (index === finishStep) return "current";
+    return "waiting";
+  }
+
+  // ── Render ─────────────────────────────────────────────────────────────────
+  function render() {
+    const root = document.getElementById("onboarding");
+    const { finishStep, isResetting } = state;
+
+    const isDone       = finishStep >= finishSteps.length;
+    const resettingCls = isResetting ? " onboarding--resetting" : "";
+    root.className     = `onboarding${resettingCls}`;
+
+    // Build steps HTML
+    const stepsDoneCls = isDone ? " onboarding__finish-steps--done" : "";
+    const stepsHTML = finishSteps.map((step, i) => {
+      const phase         = getPhase(i);
+      const progressActive = phase !== "waiting";
+      return `
+        <div class="onboarding__finish-step onboarding__finish-step--${phase}">
+          ${stepPhaseHTML(step.before, progressActive)}
+          ${stepDonePhaseHTML(step.after)}
+        </div>`;
+    }).join("");
+
+    const finishedHTML = isDone ? `
+      <div class="onboarding__finished">
+        ${icon("check-circle", "success")}
+        <h2>All set and ready to go!</h2>
+        <p>It's time to explore and take the first step towards enhanced productivity.</p>
+        <button class="onboarding__button" type="button" id="getStartedBtn">Get Started</button>
+      </div>` : "";
+
+    root.innerHTML = `
+      <div class="onboarding__finish-steps${stepsDoneCls}">${stepsHTML}</div>
+      ${finishedHTML}`;
+
+    // Bind reset button
+    const btn = document.getElementById("getStartedBtn");
+    if (btn) btn.addEventListener("click", reset);
+  }
+
+  // Partial update: only refresh the progress SVG of the active step (perf)
+  function updateProgressOnly() {
+    const activeStep = document.querySelector(".onboarding__finish-step--current");
+    if (!activeStep) return;
+    const svg = activeStep.querySelector(".onboarding__finish-step-phase:first-child .onboarding__progress circle:last-child");
+    if (!svg) return;
+    const circ   = 62.83;
+    const offset = circ * (1 - state.finishStepProgress);
+    svg.setAttribute("stroke-dashoffset", offset);
+  }
+
+  // ── Animation loop ─────────────────────────────────────────────────────────
+  function startProgress() {
+    cancelAnimationFrame(rafId);
+    const nextFrame = () => {
+      state.finishStepProgress = Math.min(state.finishStepProgress + 0.0125, 1);
+      if (state.finishStepProgress >= 1) {
+        state.finishStepProgress = 1;
+        updateProgressOnly();
+        onProgressComplete();
+        return;
+      }
+      updateProgressOnly();
+      rafId = requestAnimationFrame(nextFrame);
+    };
+    rafId = requestAnimationFrame(nextFrame);
+  }
+
+  function onProgressComplete() {
+    clearTimeout(waiterId);
+    waiterId = setTimeout(() => {
+      state.finishStepProgress = 0;
+      state.finishStep += 1;
+      render();
+
+      if (state.finishStep < finishSteps.length) {
+        startProgress();
+      }
+    }, 750);
+  }
+
+  // ── Controls ───────────────────────────────────────────────────────────────
+  function reset() {
+    cancelAnimationFrame(rafId);
+    clearTimeout(waiterId);
+    state.isResetting       = true;
+    state.finishStep        = -1;
+    state.finishStepProgress = 1;
+    render();
+    // remove resetting flag on next frame so transitions re-enable
+    requestAnimationFrame(() => {
+      state.isResetting = false;
+    });
+  }
+
+  function start() {
+    state.finishStepProgress = 0;
+    state.finishStep = 0;
+    render();
+    startProgress();
+  }
+
+  // ── Boot ───────────────────────────────────────────────────────────────────
+  render();       // show initial (pre-start) state
+  setTimeout(start, 400);  // auto-start after a brief pause
+</script>
+</body>
+</html>
